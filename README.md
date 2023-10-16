@@ -54,6 +54,21 @@ python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
 ```
 
+### pngquant 
+
+`pngquant` is used for optimize the imagen
+
+**Install in Debian & Ubuntu**
+
+```commandline
+sudo apt install pngquant
+```
+**Install Arch**
+
+```commandline
+sudo pacman -Syu pngquant --noconfirm
+```
+
 ## Author
 
 👤 **Xizuth**
