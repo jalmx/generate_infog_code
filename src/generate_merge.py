@@ -1,10 +1,10 @@
 import uuid
-
-from PIL import Image
-import pngquant
 from pathlib import Path
 
-from src.LogX import Log
+import pngquant
+from PIL import Image
+
+from LogX import Log
 
 # Change to False on release
 DEBUG = True
@@ -90,7 +90,7 @@ class GenerateMerge:
         height_space = space_to_insert[1][1] - space_to_insert[0][1]
 
         width, height = img.size
-
+        Log.i(f"Size image inside {width, height}")
         initial = width if width >= height else height
         base = width_space if width >= height else height_space
         Log.i(f"Initial size: {width_space, height_space}", debug=DEBUG)

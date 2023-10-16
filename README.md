@@ -13,7 +13,7 @@
 
 ## How to use
 
-- **Step 1**. Add absolute path from `carbon-now-cli` to file `path_cabron.py`
+- **Step 1**. Add absolute path from `carbon-now-cli` to file `config_carbon.py`, and other data
 - **Step 2**. Install all dependencies
 
 ```commandline
@@ -23,8 +23,9 @@ generate_infog base_template.png code_file.py
 ## Install
 
 ```sh
-npm i -g playwright # it's used by carbon-now-cli
-npm i -g carbon-now-cli
+npx playwright install
+
+npm i -g carbon-now-cli --force --ignore-scripts # adds this flags in case failed
 python -m venv .venv
 source bin/activate
 pip install -r requirements.txt

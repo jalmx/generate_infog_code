@@ -2,8 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 
+from LogX import Log
 from config_carbon import PATH_CARBON, PATH_CONFIG, PRESET
-from src.LogX import Log
 
 # Change to False in release
 DEBUG = True
@@ -21,7 +21,7 @@ class CodeToImagen:
         return args if path_json else ""
 
     @staticmethod
-    def generate_code_to_imagen(path_full_carbon: str, file_path_full) -> dict | None:
+    def generate_code_to_imagen(path_full_carbon: str, file_path_full: str) -> dict | None:
         Log.i("Config to carbon", [path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
               debug=DEBUG)
         result = subprocess.Popen([path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
