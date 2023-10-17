@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to generate_infog 👋</h1>
+<h1 align="center">Welcome to Generate infographic 🤖</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -18,7 +18,22 @@
 
 ```commandline
 generate_infog base_template.png code_file.py 
+generate_infog base_template.png imagen.png
+generate_infog list_to_create.csv
 ```
+
+Exmaple for the format to `csv` file
+
+| path imagen base | path text file code or imagen |
+|------------------|-------------------------------|
+| base_sqrt.png    | package.json                  |
+| base_rect.png    | main.js                       |
+| base.png         | __main__.py                   |
+| base.png         | image.png                     |
+| base_sqrt.png    | image.jpeg                    |
+| base2.png        | image.jpg                     |
+
+> Note: Yet implementation the second param for imagen, just the code file 🤕
 
 ## Install
 
