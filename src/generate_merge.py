@@ -10,8 +10,6 @@ from LogX import Log
 DEBUG = True
 
 
-# todo: Add documentation for all methods
-
 class GenerateMerge:
     """
     Class to merge the imagen base with another, central to first
@@ -48,7 +46,13 @@ class GenerateMerge:
         return base / initial
 
     @staticmethod
-    def _center_image(space: tuple, img_size: tuple):
+    def _center_image(space: tuple, img_size: tuple) -> tuple[int, int]:
+        """
+        Center imagen inside another
+        :param space: Space than can use to insert
+        :param img_size: Size of imagen to insert
+        :return: tuple with the position where to insert
+        """
         width_space = space[1][0] - space[0][0]
         height_space = space[1][1] - space[0][1]
         width_img = img_size[0]
@@ -85,6 +89,12 @@ class GenerateMerge:
             return False
 
     def _resize(self, img: Image, space_to_insert: tuple):
+        """
+        Resize the image taking the space free
+        :param img: Image principal or base
+        :param space_to_insert: tuple with the size to insert
+        :return: tuple with the new size
+        """
         Log.i(f"space to insert{space_to_insert}", debug=DEBUG)
         width_space = space_to_insert[1][0] - space_to_insert[0][0]
         height_space = space_to_insert[1][1] - space_to_insert[0][1]
@@ -106,7 +116,12 @@ class GenerateMerge:
         return int(new_width), int(new_height)
 
     def _generate_img_inside(self, img_second: Image, space_to_insert):
+        """
 
+        :param img_second:
+        :param space_to_insert:
+        :return:
+        """
         Log.i(f"Size initial imagen inside {img_second.size}", debug=DEBUG)
 
         r = self._resize(img_second, space_to_insert)
@@ -116,13 +131,26 @@ class GenerateMerge:
         return img_second_resize
 
     @staticmethod
-    def generate_name(name: str):
+    def generate_name(name: str) -> str:
+        """
+        Return the new name to imagen, like [name]_[hash].png
+        :param name: name from imagen to add a hash
+        :return: new name like [name]_[hash].png
+        """
         name, ext = name.split(".")
         hash_code = str(uuid.uuid4().hex)[:10]
         return f"{name}_{hash_code}.{ext}"
 
-    def generate(self, path_imagen_base: str, path_imagen_inside: str, name_imagen_result="result.png", optimize=True):
-
+    def generate(self, path_imagen_base: str, path_imagen_inside: str, name_imagen_result="result.png",
+                 optimize=True) -> str:
+        """
+        Create the merge of images
+        :param path_imagen_base: path from image base, where to insert the second one
+        :param path_imagen_inside: path from image than will be insert
+        :param name_imagen_result: name for the image result
+        :param optimize: `True` for use optimization by PIL and `pngquant`
+        :return: The path the result image
+        """
         img_base = Image.open(path_imagen_base)
         img_second = Image.open(path_imagen_inside)
         space = self._calculate_space(img_base.size)
