@@ -4,7 +4,7 @@ from pathlib import Path
 from LogX import Log
 
 # this variable control all debug app
-DEBUG = True
+DEBUG = False
 
 
 def is_dir(path_dir: Path) -> bool:
