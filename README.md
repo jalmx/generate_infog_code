@@ -9,7 +9,34 @@
   </a>
 </p>
 
-> Generate an image to post on facebook from code
+Tool cli for generate a merge of images, the first one is the base, the second one will be insert inside the first,
+adjust to 80% to space.
+You can specific a csv file with this information, see example.
+
+
+```commandline
+Examples to use:
+
+    generate_infog base_template.png code_file.py  
+    generate_infog base_template.png imagen.png
+    generate_infog base_template.png dir_with_files
+    generate_infog list_to_create.csv
+    
+Example csv file:
+
+    |path imagen base | path text file code or imagen|
+    |-----------------|------------------------------|
+    |base_sqrt.png    |package.json                  |
+    |base_rect.png    |code.png                      |
+    |base.png         |__main__.py                   |
+    
+More information:
+
+    https://github.com/jalmx/generate_infog_code
+
+By Xizuth 
+2023
+```
 
 ## How to use
 
@@ -17,21 +44,22 @@
 - **Step 2**. Install all dependencies
 
 ```commandline
-generate_infog base_template.png code_file.py 
+generate_infog base_template.png code_file.py  
 generate_infog base_template.png imagen.png
+generate_infog base_template.png dir_with_files
 generate_infog list_to_create.csv
 ```
 
-Exmaple for the format to `csv` file
+Example for the format to `csv` file
 
 | path imagen base | path text file code or imagen |
-|------------------|-------------------------------|
-| base_sqrt.png    | package.json                  |
-| base_rect.png    | main.js                       |
-| base.png         | __main__.py                   |
-| base.png         | image.png                     |
-| base_sqrt.png    | image.jpeg                    |
-| base2.png        | image.jpg                     |
+|------------------|------------------------------|
+| base_sqrt.png    | package.json                 |
+| base_rect.png    | main.js                      |
+| base.png         | \__main\__.py                |
+| base.png         | image.png                    |
+| base_sqrt.png    | image.jpeg                   |
+| base2.png        | image.jpg                    |
 
 > Note: Yet implementation the second param for imagen, just the code file 🤕
 

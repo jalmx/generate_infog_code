@@ -26,7 +26,7 @@ class Log:
         long_spacer = 120
         if debug:
             print(f"{BCOLORS.ERROR}[{'=' * long_spacer}]")
-            print("Error", *message)
+            print("Error: ", *message)
             print(f"[{'=' * long_spacer}]{BCOLORS.ENDC}")
 
 

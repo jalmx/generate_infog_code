@@ -1,22 +1,56 @@
 import os
 
+from LogX import Log
+from batch import get_list_from_csv, get_text_files_from_dir
+from cli import Cli
+from code_to_imagen import CodeToImagen
+from config_carbon import PATH_CARBON
 from generate_merge import GenerateMerge
-from src.code_to_imagen import CodeToImagen
-from src.config_carbon import PATH_CARBON
+from util import get_name_file, is_file_text
+
+
+def generate_from_dir(image_base, path_dir):
+    list_files = get_text_files_from_dir(path_dir)
+    for imagen_inside in list_files:
+        generate_from_file(image_base, imagen_inside)
+
+
+def generate_from_csv(path_csv):
+    list_files = get_list_from_csv(path_csv)
+
+    for images in list_files:
+        imagen_base, imagen_inside = images
+        generate_from_file(imagen_base, imagen_inside)
+
+
+def generate_from_file(image_base, path_file):
+    img_inside = path_file
+    erase = False
+
+    if is_file_text(img_inside):
+        img_inside = CodeToImagen.generate_code_to_imagen(PATH_CARBON, path_file)["path"]
+        if not img_inside:
+            Log.e(f"Carbon cant to generate the image from file, try to do manually. For file: {path_file}")
+            return
+        erase = True
+
+    GenerateMerge().generate(image_base, img_inside, name_imagen_result=get_name_file(img_inside))
+
+    if erase:
+        os.remove(os.path.abspath(img_inside))
 
 
 def main():
-    template_sqrt_path = "./assets/template_xiztuh_fb_post_sqrt.png"
-    template_rect_path = "./assets/template_xiztuh_fb_post_rect.png"
+    params = Cli().get_params()
 
-    img_inside = CodeToImagen.generate_code_to_imagen(PATH_CARBON,
-                                                      "/home/xizuth/Projects/generate_infog/src/assets/requirements.txt")[
-        "path"]
-
-    print("-------->", img_inside)
-    path_img = GenerateMerge().generate(template_sqrt_path, img_inside)
-    print("Imagen merged", path_img)
-    os.remove(img_inside)
+    if params.get(Cli.KEY_INSIDE_FILE) or params.get(Cli.KEY_DIR):
+        image_base = params.get(Cli.KEY_BASE)
+        if params.get(Cli.KEY_DIR):
+            generate_from_dir(image_base, params.get(Cli.KEY_DIR))
+        elif params.get(Cli.KEY_INSIDE_FILE):
+            generate_from_file(image_base, params.get(Cli.KEY_INSIDE_FILE))
+    elif params.get(Cli.KEY_CSV):
+        generate_from_csv(params.get(Cli.KEY_CSV))
 
 
 if __name__ == "__main__":

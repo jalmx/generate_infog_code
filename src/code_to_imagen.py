@@ -4,9 +4,7 @@ from pathlib import Path
 
 from LogX import Log
 from config_carbon import PATH_CARBON, PATH_CONFIG, PRESET
-
-# Change to False in release
-DEBUG = True
+from util import DEBUG
 
 
 class CodeToImagen:
@@ -22,7 +20,8 @@ class CodeToImagen:
 
     @staticmethod
     def generate_code_to_imagen(path_full_carbon: str, file_path_full: str) -> dict | None:
-        Log.i("Config to carbon", [path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
+        Log.i(f"{__name__}:", "Config to carbon",
+              [path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
               debug=DEBUG)
         result = subprocess.Popen([path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
                                   text=True,
@@ -32,18 +31,33 @@ class CodeToImagen:
         try:
             process_ok = result.stdout.read()
             if process_ok:
-                path_imagen = process_ok.strip().split("\n")[-1].split(" ")[-2]
-                Log.i("path imagen:", path_imagen, debug=DEBUG)
-                return {
+
+                data_carbon = {
+                    "path": None,
+                    "name": None}
+
+                Log.i(f"{__name__} - Carbon log:", process_ok.strip())
+
+                path_imagen = process_ok.strip().split("\n")[-1]
+                if len(path_imagen) < 40:
+                    Log.e(f"Message from carbon: {process_ok.strip()}", debug=DEBUG)
+                    return data_carbon
+                path_imagen = path_imagen[30:][:-2]
+
+                Log.i(f"{__name__}:", "path imagen:", path_imagen, debug=DEBUG)
+
+                data_carbon = {
                     "path": path_imagen,
-                    "name": path_imagen.split(os.sep)[-1]}
+                    "name": path_imagen.split(os.sep)[-1]
+                }
+                return data_carbon
 
             error_message = result.stderr.read()
             if error_message:
-                Log.e(f"Message Error carbon: {error_message}", debug=DEBUG)
+                Log.e(f"{__name__}:", f"Message Error carbon: {error_message}", debug=DEBUG)
                 return None
         except Exception as e:
-            Log.e(f"Error: {e}", debug=DEBUG)
+            Log.e(f"{__name__}:", f"Error: {e}", debug=DEBUG)
             return None
 
 

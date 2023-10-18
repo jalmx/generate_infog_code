@@ -5,9 +5,7 @@ import pngquant
 from PIL import Image
 
 from LogX import Log
-
-# Change to False on release
-DEBUG = True
+from util import DEBUG
 
 
 class GenerateMerge:
@@ -58,19 +56,19 @@ class GenerateMerge:
         width_img = img_size[0]
         height_img = img_size[1]
 
-        Log.i(f"Space Horizontal: {width_space}", debug=DEBUG)
-        Log.i(f"Space Vertical: {height_space}", debug=DEBUG)
-        Log.i(f"width imagen: {width_img}", debug=DEBUG)
-        Log.i(f"Height imagen: {height_img}", debug=DEBUG)
-        Log.i(f"space x:{space[0][0]}", debug=DEBUG)
-        Log.i(f"space y:{space[0][1]}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Space Horizontal: {width_space}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Space Vertical: {height_space}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"width imagen: {width_img}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Height imagen: {height_img}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"space x:{space[0][0]}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"space y:{space[0][1]}", debug=DEBUG)
 
         position_x_base = int(width_space / 2 - width_img / 2)
         position_y_base = int(height_space / 2 - height_img / 2)
         position_x = int(width_space / 2 - width_img / 2) + space[0][0] if position_x_base > 0 else space[0][0]
         position_y = int(height_space / 2 - height_img / 2) + space[0][1] if position_y_base > 0 else space[0][1]
         position = position_x, position_y
-        Log.i(f"position: {position}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"position: {position}", debug=DEBUG)
         return position
 
     @staticmethod
@@ -85,7 +83,7 @@ class GenerateMerge:
             pngquant.quant_image(path_img)
             return True
         except Exception as e:
-            Log.e(f"Error: {e}")
+            Log.e(f"{__name__}:", f"Error: {e}")
             return False
 
     def _resize(self, img: Image, space_to_insert: tuple):
@@ -95,24 +93,24 @@ class GenerateMerge:
         :param space_to_insert: tuple with the size to insert
         :return: tuple with the new size
         """
-        Log.i(f"space to insert{space_to_insert}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"space to insert{space_to_insert}", debug=DEBUG)
         width_space = space_to_insert[1][0] - space_to_insert[0][0]
         height_space = space_to_insert[1][1] - space_to_insert[0][1]
 
         width, height = img.size
-        Log.i(f"Size image inside {width, height}")
+        Log.i(f"{__name__}:", f"Size image inside {width, height}", debug=DEBUG)
         initial = width if width >= height else height
         base = width_space if width >= height else height_space
-        Log.i(f"Initial size: {width_space, height_space}", debug=DEBUG)
-        Log.i(f"initial: {initial}", debug=DEBUG)
-        Log.i(f"base: {base}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Initial size: {width_space, height_space}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"initial: {initial}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"base: {base}", debug=DEBUG)
         factor = self._get_factor(initial, base)
 
-        Log.i(f"factor: {factor}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"factor: {factor}", debug=DEBUG)
         new_width = width * factor
         new_height = height * factor
 
-        Log.i(f"New Size: {int(new_width), int(new_height)}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"New Size: {int(new_width), int(new_height)}", debug=DEBUG)
         return int(new_width), int(new_height)
 
     def _generate_img_inside(self, img_second: Image, space_to_insert):
@@ -122,12 +120,12 @@ class GenerateMerge:
         :param space_to_insert:
         :return:
         """
-        Log.i(f"Size initial imagen inside {img_second.size}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Size initial imagen inside {img_second.size}", debug=DEBUG)
 
         r = self._resize(img_second, space_to_insert)
 
         img_second_resize = img_second.resize(r)
-        Log.i(f"Set new size image inside {img_second_resize.size}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Set new size image inside {img_second_resize.size}", debug=DEBUG)
         return img_second_resize
 
     @staticmethod
@@ -155,7 +153,7 @@ class GenerateMerge:
         img_second = Image.open(path_imagen_inside)
         space = self._calculate_space(img_base.size)
 
-        Log.i(f"free space inside: {space}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"{__name__}:", f"free space inside: {space}", debug=DEBUG)
 
         new_inside_img = self._generate_img_inside(img_second, space)
 
@@ -167,7 +165,7 @@ class GenerateMerge:
 
         new_composition.save(name_imagen_result, optimize=True)
         path_infog = Path(name_imagen_result).absolute()
-        Log.i(f"Saved on:{path_infog}")
+        Log.i(f"{__name__}:", f"{__name__}:", f"Saved on:{path_infog}")
 
         if optimize:
             self._optimization(name_imagen_result)
