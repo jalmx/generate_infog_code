@@ -1,10 +1,25 @@
+import json
 import os
+from os import path
 from pathlib import Path
 
 from LogX import Log
 
+
 # this variable control all debug app
-DEBUG = False
+
+def get_debug():
+    folder = [".config", "generator_x"]
+    full_path = path.join(Path.home(), *folder, "config_carbon.json")
+    print(full_path)
+    try:
+        with open(full_path, "r") as d:
+            return json.load(d)["DEBUG"]
+    except:
+        return False
+
+
+DEBUG = get_debug()
 
 
 def is_dir(path_dir: Path) -> bool:
@@ -76,3 +91,24 @@ def get_name_file(name: str):
     :return: name with extension `png`
     """
     return f"{name.split(os.sep)[-1].split('.')[0]}.png"
+
+
+def get_full_path_dir(file_name=""):
+    """
+    Get full path for all config files for app
+    :param file_name:
+    :return:
+    """
+    folder = [".config", "generator_x"]
+    return path.join(Path.home(), *folder, file_name)
+
+
+def generate_dir():
+    """
+    Generate the folder for save all config files
+    :return:
+    """
+    full_path_dir = get_full_path_dir()
+    if not path.exists(full_path_dir):
+        Path.mkdir(Path(full_path_dir))
+        Log.i(__name__, f"Folder generated at {full_path_dir}")

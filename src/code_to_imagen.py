@@ -3,11 +3,14 @@ import subprocess
 from pathlib import Path
 
 from LogX import Log
-from config_carbon import PATH_CARBON, PATH_CONFIG, PRESET
+from config_start import PATH_CONFIG, PRESET
 from util import DEBUG
 
 
 class CodeToImagen:
+    """
+    Class to manage all about carbon-sh like a process
+    """
 
     def __init__(self):
         pass
@@ -36,7 +39,7 @@ class CodeToImagen:
                     "path": None,
                     "name": None}
 
-                Log.i(f"{__name__} - Carbon log:", process_ok.strip())
+                Log.i(f"{__name__} - Carbon log:", process_ok.strip(), debug=DEBUG)
 
                 path_imagen = process_ok.strip().split("\n")[-1]
                 if len(path_imagen) < 40:
@@ -62,9 +65,12 @@ class CodeToImagen:
 
 
 def test():
-    file_path = "/home/xizuth/Projects/generate_infog/package.json"
+    from config_start import PATH_CARBON, Config
 
-    path_code_img = CodeToImagen.generate_code_to_imagen(PATH_CARBON, file_path)
+    file_path = "/home/xizuth/Projects/generate_infog/src/cli.py"
+
+    print(Config.get_config_json()[PATH_CARBON])
+    path_code_img = CodeToImagen.generate_code_to_imagen(Config.get_config_json()[PATH_CARBON], file_path)
     print(f"Code to imagen saved on: {path_code_img}")
 
 

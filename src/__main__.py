@@ -4,8 +4,9 @@ from LogX import Log
 from batch import get_list_from_csv, get_text_files_from_dir
 from cli import Cli
 from code_to_imagen import CodeToImagen
-from config_carbon import PATH_CARBON
+from config_start import PATH_CARBON, Config
 from generate_merge import GenerateMerge
+from config_create import create_config_carbon_json
 from util import get_name_file, is_file_text
 
 
@@ -28,7 +29,7 @@ def generate_from_file(image_base, path_file):
     erase = False
 
     if is_file_text(img_inside):
-        img_inside = CodeToImagen.generate_code_to_imagen(PATH_CARBON, path_file)["path"]
+        img_inside = CodeToImagen.generate_code_to_imagen(Config.get_config_json()[PATH_CARBON], path_file)["path"]
         if not img_inside:
             Log.e(f"Carbon cant to generate the image from file, try to do manually. For file: {path_file}")
             return
@@ -41,6 +42,8 @@ def generate_from_file(image_base, path_file):
 
 
 def main():
+    create_config_carbon_json()
+
     params = Cli().get_params()
 
     if params.get(Cli.KEY_INSIDE_FILE) or params.get(Cli.KEY_DIR):

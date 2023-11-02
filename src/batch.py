@@ -4,7 +4,7 @@ from pathlib import Path
 
 from LogX import Log
 from code_to_imagen import CodeToImagen
-from config_carbon import PATH_CARBON
+from config_start import PATH_CARBON
 from generate_merge import GenerateMerge
 from util import is_file_text, is_and_exist_image, get_name_file, DEBUG
 

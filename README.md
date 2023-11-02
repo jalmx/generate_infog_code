@@ -11,7 +11,7 @@
 
 Tool cli for generate a merge of images, the first one is the base, the second one will be insert inside the first,
 adjust to 80% to space.
-You can specific a csv file with this information, see example.
+You can specify a csv file with this information, see example.
 
 
 ```commandline
@@ -53,13 +53,13 @@ generate_infog list_to_create.csv
 Example for the format to `csv` file
 
 | path imagen base | path text file code or imagen |
-|------------------|------------------------------|
-| base_sqrt.png    | package.json                 |
-| base_rect.png    | main.js                      |
-| base.png         | \__main\__.py                |
-| base.png         | image.png                    |
-| base_sqrt.png    | image.jpeg                   |
-| base2.png        | image.jpg                    |
+|------------------|-------------------------------|
+| base_sqrt.png    | package.json                  |
+| base_rect.png    | main.js                       |
+| base.png         | \__main\__.py                 |
+| base.png         | image.png                     |
+| base_sqrt.png    | image.jpeg                    |
+| base2.png        | image.jpg                     |
 
 > Note: Yet implementation the second param for imagen, just the code file 🤕
 
@@ -114,6 +114,11 @@ sudo pacman -Syu pngquant --noconfirm
 ```
 
 ## Author
+
+## Todo
+
+- verify to load the carbon configuration json
+- Create a script to create a package app
 
 👤 **Xizuth**
 
