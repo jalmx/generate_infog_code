@@ -1,7 +1,6 @@
 import uuid
 from pathlib import Path
 
-import pngquant
 from PIL import Image
 
 from LogX import Log
@@ -10,7 +9,7 @@ from util import DEBUG
 
 class GenerateMerge:
     """
-    Class to merge the imagen base with another, central to first
+    Class to merge the image base with another, central to first
     """
 
     def __init__(self):
@@ -19,7 +18,7 @@ class GenerateMerge:
     @staticmethod
     def _calculate_space(size_image: tuple[int, int], factor=0.8):
         """
-        function to calculate the space inside where have to position the information imagen
+        function to calculate the space inside where have to position the information image
         :param size_image: size image main
         :param factor: define the space proportional, with 0.8, we say the 80% to use
         :return: tuple with box (x1,y1, x2, y2)
@@ -36,9 +35,9 @@ class GenerateMerge:
     @staticmethod
     def _get_factor(initial, base) -> float:
         """
-        Calculate the factor to resize the imagen
+        Calculate the factor to resize the image
         :param initial: main size
-        :param base: the size from imagen to resize
+        :param base: the size from image to resize
         :return: ratio factor
         """
         return base / initial
@@ -46,9 +45,9 @@ class GenerateMerge:
     @staticmethod
     def _center_image(space: tuple, img_size: tuple) -> tuple[int, int]:
         """
-        Center imagen inside another
+        Center image inside another
         :param space: Space than can use to insert
-        :param img_size: Size of imagen to insert
+        :param img_size: Size of image to insert
         :return: tuple with the position where to insert
         """
         width_space = space[1][0] - space[0][0]
@@ -58,8 +57,8 @@ class GenerateMerge:
 
         Log.i(f"{__name__}:", f"Space Horizontal: {width_space}", debug=DEBUG)
         Log.i(f"{__name__}:", f"Space Vertical: {height_space}", debug=DEBUG)
-        Log.i(f"{__name__}:", f"width imagen: {width_img}", debug=DEBUG)
-        Log.i(f"{__name__}:", f"Height imagen: {height_img}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"width image: {width_img}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Height image: {height_img}", debug=DEBUG)
         Log.i(f"{__name__}:", f"space x:{space[0][0]}", debug=DEBUG)
         Log.i(f"{__name__}:", f"space y:{space[0][1]}", debug=DEBUG)
 
@@ -70,21 +69,6 @@ class GenerateMerge:
         position = position_x, position_y
         Log.i(f"{__name__}:", f"position: {position}", debug=DEBUG)
         return position
-
-    @staticmethod
-    def _optimization(path_img: str):
-        """
-        Configura to `pngquant`
-        :param path_img:
-        :return:
-        """
-        try:
-            pngquant.config(min_quality=0, max_quality=100)
-            pngquant.quant_image(path_img)
-            return True
-        except Exception as e:
-            Log.e(f"{__name__}:", f"Error: {e}")
-            return False
 
     def _resize(self, img: Image, space_to_insert: tuple):
         """
@@ -120,7 +104,7 @@ class GenerateMerge:
         :param space_to_insert:
         :return:
         """
-        Log.i(f"{__name__}:", f"Size initial imagen inside {img_second.size}", debug=DEBUG)
+        Log.i(f"{__name__}:", f"Size initial image inside {img_second.size}", debug=DEBUG)
 
         r = self._resize(img_second, space_to_insert)
 
@@ -131,26 +115,26 @@ class GenerateMerge:
     @staticmethod
     def generate_name(name: str) -> str:
         """
-        Return the new name to imagen, like [name]_[hash].png
-        :param name: name from imagen to add a hash
+        Return the new name to image, like [name]_[hash].png
+        :param name: name from image to add a hash
         :return: new name like [name]_[hash].png
         """
         name, ext = name.split(".")
         hash_code = str(uuid.uuid4().hex)[:10]
         return f"{name}_{hash_code}.{ext}"
 
-    def generate(self, path_imagen_base: str, path_imagen_inside: str, name_imagen_result="result.png",
+    def generate(self, path_image_base: str, path_image_inside: str, name_image_result="result.png",
                  optimize=True) -> str:
         """
         Create the merge of images
-        :param path_imagen_base: path from image base, where to insert the second one
-        :param path_imagen_inside: path from image than will be insert
-        :param name_imagen_result: name for the image result
+        :param path_image_base: path from image base, where to insert the second one
+        :param path_image_inside: path from image than will be insert
+        :param name_image_result: name for the image result
         :param optimize: `True` for use optimization by PIL and `pngquant`
         :return: The path the result image
         """
-        img_base = Image.open(path_imagen_base)
-        img_second = Image.open(path_imagen_inside)
+        img_base = Image.open(path_image_base)
+        img_second = Image.open(path_image_inside)
         space = self._calculate_space(img_base.size)
 
         Log.i(f"{__name__}:", f"{__name__}:", f"free space inside: {space}", debug=DEBUG)
@@ -161,13 +145,10 @@ class GenerateMerge:
         new_composition.paste(img_base, (0, 0))
         new_composition.paste(new_inside_img, self._center_image(space, new_inside_img.size))
 
-        name_imagen_result = self.generate_name(name_imagen_result)
+        name_image_result = self.generate_name(name_image_result)
 
-        new_composition.save(name_imagen_result, optimize=True)
-        path_infog = Path(name_imagen_result).absolute()
+        new_composition.save(name_image_result, optimize=True)
+        path_infog = Path(name_image_result).absolute()
         Log.i(f"{__name__}:", f"{__name__}:", f"Saved on:{path_infog}")
-
-        if optimize:
-            self._optimization(name_imagen_result)
 
         return path_infog

@@ -25,7 +25,7 @@ class Config:
     @staticmethod
     def get_init_config():
         return {
-            PATH_CARBON: path.join(Path.home(), ".nvm/versions/node/v18.18.2/bin/carbon-now"),
+            PATH_CARBON: path.join(Path.home(), ".nvm/versions/node/v20.12.0/bin/carbon-now"),
             PATH_CONFIG: path.join(get_full_path_dir(name_file_config)),
             PRESET: "xizuth",
             DEBUG: False

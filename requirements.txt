@@ -1,2 +1,1 @@
 Pillow==10.0.1
-pngquant==1.0.7

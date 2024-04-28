@@ -12,13 +12,13 @@ You can specific a csv file with this information, see example.
 Examples to use:
 
     generate_infog base_template.png code_file.py  
-    generate_infog base_template.png imagen.png
+    generate_infog base_template.png image.png
     generate_infog base_template.png dir_with_files
     generate_infog list_to_create.csv
     
 Example csv file:
 
-    |path imagen base | path text file code or imagen|
+    |path image base | path text file code or image|
     |-----------------|------------------------------|
     |base_sqrt.png    |package.json                  |
     |base_rect.png    |code.png                      |

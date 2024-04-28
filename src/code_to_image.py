@@ -7,7 +7,7 @@ from config_start import PATH_CONFIG, PRESET
 from util import DEBUG
 
 
-class CodeToImagen:
+class CodeToImage:
     """
     Class to manage all about carbon-sh like a process
     """
@@ -22,11 +22,11 @@ class CodeToImagen:
         return args if path_json else ""
 
     @staticmethod
-    def generate_code_to_imagen(path_full_carbon: str, file_path_full: str) -> dict | None:
+    def generate_code_to_image(path_full_carbon: str, file_path_full: str) -> dict | None:
         Log.i(f"{__name__}:", "Config to carbon",
-              [path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
+              [path_full_carbon, file_path_full, *CodeToImage._load_path_config_carbon()],
               debug=DEBUG)
-        result = subprocess.Popen([path_full_carbon, file_path_full, *CodeToImagen._load_path_config_carbon()],
+        result = subprocess.Popen([path_full_carbon, file_path_full, *CodeToImage._load_path_config_carbon()],
                                   text=True,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
@@ -47,7 +47,7 @@ class CodeToImagen:
                     return data_carbon
                 path_imagen = path_imagen[30:][:-2]
 
-                Log.i(f"{__name__}:", "path imagen:", path_imagen, debug=DEBUG)
+                Log.i(f"{__name__}:", "path image:", path_imagen, debug=DEBUG)
 
                 data_carbon = {
                     "path": path_imagen,
@@ -70,8 +70,8 @@ def test():
     file_path = "/home/xizuth/Projects/generate_infog/src/cli.py"
 
     print(Config.get_config_json()[PATH_CARBON])
-    path_code_img = CodeToImagen.generate_code_to_imagen(Config.get_config_json()[PATH_CARBON], file_path)
-    print(f"Code to imagen saved on: {path_code_img}")
+    path_code_img = CodeToImage.generate_code_to_imagen(Config.get_config_json()[PATH_CARBON], file_path)
+    print(f"Code to image saved on: {path_code_img}")
 
 
 if __name__ == "__main__":

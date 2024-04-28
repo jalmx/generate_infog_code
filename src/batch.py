@@ -3,9 +3,11 @@ import os
 from pathlib import Path
 
 from LogX import Log
-from code_to_imagen import CodeToImagen
+
 from config_start import PATH_CARBON
 from generate_merge import GenerateMerge
+from code_to_image import CodeToImage
+
 from util import is_file_text, is_and_exist_image, get_name_file, DEBUG
 
 
@@ -13,13 +15,13 @@ def get_list_from_csv(path_csv: str) -> list[list[str]]:
     """
     Read a csv file with this template
 
-    |path imagen base | path text file code or imagen|
+    |path image base | path text file code or image|
     |-----------------|------------------------------|
     |base_sqrt.png    |package.json                  |
     |base_rect.png    |main.js                       |
     |base.png         |__main__.py                   |
     :param path_csv:
-    :return: list with each data to create then a merge imagen
+    :return: list with each data to create then a merge image
     """
 
     files_list = []
@@ -64,15 +66,15 @@ def test_dir():
 
     for e in list_files:
         Log.i(f"{__name__}:", get_name_file(e), debug=DEBUG)
-    for imagen_inside in list_files:
-        img_inside = CodeToImagen.generate_code_to_imagen(PATH_CARBON, imagen_inside)["path"]
-        Log.i(f"{__name__}:", f"Imagen code generated: {img_inside}")
+    for image_inside in list_files:
+        img_inside = CodeToImage.generate_code_to_image(PATH_CARBON, image_inside)["path"]
+        Log.i(f"{__name__}:", f"image code generated: {img_inside}")
 
-        name_new_imagen = get_name_file(imagen_inside)
-        Log.i(f"{__name__}:", f"new name: {name_new_imagen}")
+        name_new_image = get_name_file(image_inside)
+        Log.i(f"{__name__}:", f"new name: {name_new_image}")
 
-        result = GenerateMerge().generate(path_imagen_base=template_sqrt_path, path_imagen_inside=img_inside,
-                                          name_imagen_result=name_new_imagen)
+        result = GenerateMerge().generate(path_image_base=template_sqrt_path, path_image_inside=img_inside,
+                                          name_image_result=name_new_image)
         os.remove(os.path.abspath(img_inside))
 
         Log.i(f"{__name__}:", f"Image merged generated saved on: {result}")
@@ -83,15 +85,15 @@ def test_read_csv():
     list_files = get_list_from_csv(path)
 
     for images in list_files:
-        imagen_base, imagen_inside = images
-        img_inside = CodeToImagen.generate_code_to_imagen(PATH_CARBON, imagen_inside)["path"]
-        Log.i(f"{__name__}:", f"Imagen code generated: {img_inside}")
+        image_base, image_inside = images
+        img_inside = CodeToImage.generate_code_to_image(PATH_CARBON, image_inside)["path"]
+        Log.i(f"{__name__}:", f"image code generated: {img_inside}")
 
-        name_new_imagen = get_name_file(imagen_inside)
-        Log.i(f"{__name__}:", f"new name: {name_new_imagen}")
+        name_new_image = get_name_file(image_inside)
+        Log.i(f"{__name__}:", f"new name: {name_new_image}")
 
-        result = GenerateMerge().generate(path_imagen_base=imagen_base, path_imagen_inside=img_inside,
-                                          name_imagen_result=name_new_imagen)
+        result = GenerateMerge().generate(path_image_base=image_base, path_image_inside=img_inside,
+                                          name_image_result=name_new_image)
         os.remove(os.path.abspath(img_inside))
 
         Log.i(f"{__name__}:", f"Image merged generated saved on: {result}")

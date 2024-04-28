@@ -3,10 +3,10 @@ import os
 from LogX import Log
 from batch import get_list_from_csv, get_text_files_from_dir
 from cli import Cli
-from code_to_imagen import CodeToImagen
 from config_start import PATH_CARBON, Config
 from generate_merge import GenerateMerge
-from config_create import create_config_carbon_json
+from config_app import create_config_carbon_json
+from code_to_image import CodeToImage
 from util import get_name_file, is_file_text
 
 
@@ -29,13 +29,13 @@ def generate_from_file(image_base, path_file):
     erase = False
 
     if is_file_text(img_inside):
-        img_inside = CodeToImagen.generate_code_to_imagen(Config.get_config_json()[PATH_CARBON], path_file)["path"]
+        img_inside = CodeToImage.generate_code_to_image(Config.get_config_json()[PATH_CARBON], path_file)["path"]
         if not img_inside:
             Log.e(f"Carbon cant to generate the image from file, try to do manually. For file: {path_file}")
             return
         erase = True
 
-    GenerateMerge().generate(image_base, img_inside, name_imagen_result=get_name_file(img_inside))
+    GenerateMerge().generate(image_base, img_inside, name_image_result=get_name_file(img_inside))
 
     if erase:
         os.remove(os.path.abspath(img_inside))

@@ -38,9 +38,15 @@ By Xizuth
 2023
 ```
 
+### Run for code
+
+```commandline
+python src/__main__.py base_image.png code.py
+```
+
 ## How to use
 
-- **Step 1**. Add absolute path from `carbon-now-cli` to file `config_carbon.py`, and other data
+- **Step 1**. Add absolute path from `carbon-now-cli` to file `config_start.py`, and other data
 - **Step 2**. Install all dependencies
 
 ```commandline
@@ -61,12 +67,12 @@ Example for the format to `csv` file
 | base_sqrt.png    | image.jpeg                    |
 | base2.png        | image.jpg                     |
 
-> Note: Yet implementation the second param for imagen, just the code file 🤕
+> Note: Yet implementation the second param for image, just the code file 🤕
 
 ## Install
 
 ```sh
-npx playwright install
+npx playwright install # if fail, can try `npm install -g playwright`
 
 npm i -g carbon-now-cli --force --ignore-scripts # adds this flags in case failed
 python -m venv .venv
@@ -96,21 +102,6 @@ Then, need to config
 ```commandline
 python3 -m pip install --upgrade pip
 python3 -m pip install --upgrade Pillow
-```
-
-### pngquant 
-
-`pngquant` is used for optimize the imagen
-
-**Install in Debian & Ubuntu**
-
-```commandline
-sudo apt install pngquant
-```
-**Install Arch**
-
-```commandline
-sudo pacman -Syu pngquant --noconfirm
 ```
 
 ## Author
