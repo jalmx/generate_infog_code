@@ -9,7 +9,7 @@ git commit -m "build release $DATE"
 HASH=$(git rev-parse --short HEAD)
 rm -rf release generate_info* 2&> /dev/null
 
-pyinstaller --noconfirm --onefile --console --name "generate_info_lasted" --add-data "src:src/" --paths "src"  "src/__main__.py" && \ 
+# pyinstaller --noconfirm --onefile --console --name "generate_info_lasted" --add-data "src:src/" --paths "src"  "src/__main__.py" && \ 
     rm -rf build && \
     rm generate_info* && \
     mv dist release && \
