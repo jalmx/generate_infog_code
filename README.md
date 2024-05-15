@@ -106,16 +106,28 @@ python3 -m pip install --upgrade Pillow
 
 ## Author
 
-## Todo
-
-- verify to load the carbon configuration json
-- Create a script to create a package app
-
 👤 **Xizuth**
 
 * Website: https://www.alejandro-leyva.com
 * Twitter: [@xizuth](https://twitter.com/xizuth)
 * Github: [@jalmx](https://github.com/jalmx)
+
+## build release
+
+### `pyinstaller`
+
+- install pyinstaller
+
+```bash
+pyinstaller --noconfirm --onefile --console --name "generate_info" --add-data "/home/xizuth/Projects/generate_infog/src:src/" --paths "/home/xizuth/Projects/generate_infog/src"  "/home/xizuth/Projects/generate_infog/src/__main__.py"
+```
+### auto-py-to-exe
+
+Show you how to created release
+
+![auto-py-to-exe](src/auto-py-to-exe_1.png)
+
+![auto-py-to-exe](src/auto-py-to-exe_2.png)
 
 ## Show your support
 
